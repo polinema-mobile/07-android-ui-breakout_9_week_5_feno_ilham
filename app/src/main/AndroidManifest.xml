@@ -11,8 +11,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".PrintParceLabel"></activity>
         <activity android:name=".PrintBundle" />
-        <activity android:name=".ActivityBundle" />
-        <activity android:name=".ParceLabel" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Challenge</string>
+    <string name="male">Male</string>
+    <string name="tanggal_lahir">DOB</string>
+    <string name="nama_mahasiswa">Name</string>
+    <string name="female">Female</string>
+    <string name="save">Save</string>
+
+    <string name="Major">Choose a Majors</string>
+
+    <string-array name="major_list">
+        <item>Accounting</item>
+        <item>Mechanical Engineering</item>
+        <item>Business Admninistration</item>
+        <item>Information Technology</item>
+        <item>Electrical Engineering</item>
+        <item>Civil Engineering</item>
+        <item>Chemical Engineering</item>
+    </string-array>
+
 </resources>
+

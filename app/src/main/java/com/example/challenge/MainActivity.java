@@ -2,41 +2,90 @@ package com.example.challenge;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+
+
+import com.example.challenge.model.Student;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText inputName, inputNIM, inputDOB;
+    private Spinner dropdown;
+    private RadioGroup rgGender;
+    private RadioButton gMale, gFemale;
+    private String selectedGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Open Bundle Activity:
+        init();
+        rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-        Button btn = findViewById(R.id.button_Bundle);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openBundle();
-            }
-        });
-        //Open parse Label activity:
-        Button btn2 = findViewById(R.id.button_parcelabel);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openParceLabel();
+                switch (radioGroup.getCheckedRadioButtonId()){
+                    case R.id.gMale:
+                        if(gMale.isChecked()){
+                            gFemale.setChecked(false);
+                            selectedGender = gMale.getText().toString();}
+                        break;
+                    case R.id.gFemale:
+                        if(gFemale.isChecked()){
+                            gMale.setChecked(false);
+                            selectedGender = gFemale.getText().toString();}
+                        break;
+                }
             }
         });
     }
-    public void openBundle(){
-        Intent intent = new Intent(this, ActivityBundle.class);
-        startActivity(intent);
+    public void saveClick(View v){
+        String name = inputName.getText().toString();
+        String nim = inputNIM.getText().toString();
+        String dob = inputDOB.getText().toString();
+        String major = dropdown.getSelectedItem().toString();
+        String gender = selectedGender;
+        Student std = new Student(name, nim,dob,gender,major);
+        Intent i = new Intent(this, PrintBundle.class);
+        i.putExtra("std",std);
+        startActivity(i);
     }
-    public void openParceLabel(){
-        Intent intent = new Intent(this, ParceLabel.class);
-        startActivity(intent);
+
+    public void dateClick(View v) {
+
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
+                        inputDOB.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    public void init(){
+        inputName = (EditText) findViewById(R.id.inputName);
+        inputNIM = (EditText)findViewById(R.id.inputNIM);
+        inputDOB = (EditText)findViewById(R.id.inputDOB);
+        dropdown = (Spinner)findViewById(R.id.inputMajor);
+        rgGender = (RadioGroup)findViewById(R.id.rgGender);
+        gMale = (RadioButton) findViewById(R.id.gMale);
+        gFemale = (RadioButton)findViewById(R.id.gFemale);
     }
 }
