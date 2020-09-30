@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dateClick(View v) {
-
         // Get Current Date
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
